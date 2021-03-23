@@ -1,5 +1,6 @@
 react-custom-scrollbars
 =========================
+We needed to completely hide the scrollbar to make submenus work in our platforms, so we made this fork.
 
 [![npm](https://img.shields.io/badge/npm-react--custom--scrollbars-brightgreen.svg?style=flat-square)]()
 [![npm version](https://img.shields.io/npm/v/react-custom-scrollbars.svg?style=flat-square)](https://www.npmjs.com/package/react-custom-scrollbars)
@@ -19,7 +20,7 @@ react-custom-scrollbars
 
 ## Installation
 ```bash
-npm install react-custom-scrollbars --save
+yarn add @meitner/react-custom-scrollbars
 ```
 
 This assumes that you’re using [npm](http://npmjs.com/) package manager with a module bundler like [Webpack](http://webpack.github.io) or [Browserify](http://browserify.org/) to consume [CommonJS modules](http://webpack.github.io/docs/commonjs.html).
@@ -71,6 +72,7 @@ class CustomScrollbars extends Component {
         autoHeightMax={200}
         thumbMinSize={30}
         universal={true}
+        showOnMouseOver={false}
         {...this.props}>
     );
   }
