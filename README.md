@@ -1,6 +1,9 @@
 react-custom-scrollbars
 =========================
-We needed to completely hide the scrollbar to make submenus work in our platforms, so we made this fork.
+We needed to completely hide the scrollbar to make submenus work in our platforms, so we made this fork. 
+
+
+We added the props `showOnMouseOver`, `disableScrollbar` and `trackVerticalStyle`
 
 [![npm](https://img.shields.io/badge/npm-react--custom--scrollbars-brightgreen.svg?style=flat-square)]()
 [![npm version](https://img.shields.io/npm/v/react-custom-scrollbars.svg?style=flat-square)](https://www.npmjs.com/package/react-custom-scrollbars)

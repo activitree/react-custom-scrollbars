@@ -233,10 +233,9 @@ export default class Scrollbars extends Component {
             thumbHorizontal,
             thumbVertical,
         } = this;
-        view.addEventListener("scroll", this.handleScroll);
         if (!getScrollbarWidth()) return;
-        const { showOnMouseOver } = this.props;
-        if (showOnMouseOver) {
+        const { showOnMouseOver, disableScrollbar } = this.props;
+        if (showOnMouseOver || !disableScrollbar) {
             trackHorizontal.addEventListener(
                 "mouseenter",
                 this.handleTrackMouseEnter
@@ -254,23 +253,26 @@ export default class Scrollbars extends Component {
                 this.handleTrackMouseLeave
             );
         }
-        trackHorizontal.addEventListener(
-            "mousedown",
-            this.handleHorizontalTrackMouseDown
-        );
-        trackVertical.addEventListener(
-            "mousedown",
-            this.handleVerticalTrackMouseDown
-        );
-        thumbHorizontal.addEventListener(
-            "mousedown",
-            this.handleHorizontalThumbMouseDown
-        );
-        thumbVertical.addEventListener(
-            "mousedown",
-            this.handleVerticalThumbMouseDown
-        );
-        window.addEventListener("resize", this.handleWindowResize);
+        if (!disableScrollbar) {
+            view.addEventListener("scroll", this.handleScroll);
+            trackHorizontal.addEventListener(
+                "mousedown",
+                this.handleHorizontalTrackMouseDown
+            );
+            trackVertical.addEventListener(
+                "mousedown",
+                this.handleVerticalTrackMouseDown
+            );
+            thumbHorizontal.addEventListener(
+                "mousedown",
+                this.handleHorizontalThumbMouseDown
+            );
+            thumbVertical.addEventListener(
+                "mousedown",
+                this.handleVerticalThumbMouseDown
+            );
+            window.addEventListener("resize", this.handleWindowResize);
+        }
     }
 
     removeListeners() {
@@ -478,7 +480,6 @@ export default class Scrollbars extends Component {
     }
 
     showTracks() {
-        console.log("pasodp");
         clearTimeout(this.hideTracksTimeout);
         css(this.trackHorizontal, { opacity: 1, height: 6 });
         css(this.trackVertical, { opacity: 1, width: 6 });
@@ -606,6 +607,8 @@ export default class Scrollbars extends Component {
             style,
             children,
             showOnMouseOver,
+            verticalTrackStyle,
+            disableScrollbar,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -662,6 +665,7 @@ export default class Scrollbars extends Component {
         };
 
         const trackVerticalStyle = {
+            ...verticalTrackStyle,
             ...trackVerticalStyleDefault,
             ...(autoHide && trackAutoHeightStyle),
             ...((!scrollbarWidth || (universal && !didMountUniversal)) && {
@@ -757,6 +761,8 @@ Scrollbars.propTypes = {
     style: PropTypes.object,
     children: PropTypes.node,
     showOnMouseOver: PropTypes.bool,
+    disableScrollbar: PropTypes.bool,
+    verticalTrackStyle: PropTypes.object,
 };
 
 Scrollbars.defaultProps = {
@@ -776,4 +782,5 @@ Scrollbars.defaultProps = {
     autoHeightMax: 200,
     universal: false,
     showOnMouseOver: true,
+    disableScrollbar: false,
 };

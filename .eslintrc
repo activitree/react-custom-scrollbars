@@ -31,7 +31,9 @@
     "no-nested-ternary": 0,
     "no-param-reassign": 2,
     "no-underscore-dangle": 0,
-    "prefer-arrow-callback": 0
+    "prefer-arrow-callback": 0,
+    "quotes": "off",
+
   },
   "plugins": [
     "react"
