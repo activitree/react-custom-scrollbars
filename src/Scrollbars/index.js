@@ -56,18 +56,14 @@ export default class Scrollbars extends Component {
 
         this.handleTrackMouseEnter = this.handleTrackMouseEnter.bind(this);
         this.handleTrackMouseLeave = this.handleTrackMouseLeave.bind(this);
-        this.handleHorizontalTrackMouseDown = this.handleHorizontalTrackMouseDown.bind(
-            this
-        );
-        this.handleVerticalTrackMouseDown = this.handleVerticalTrackMouseDown.bind(
-            this
-        );
-        this.handleHorizontalThumbMouseDown = this.handleHorizontalThumbMouseDown.bind(
-            this
-        );
-        this.handleVerticalThumbMouseDown = this.handleVerticalThumbMouseDown.bind(
-            this
-        );
+        this.handleHorizontalTrackMouseDown =
+            this.handleHorizontalTrackMouseDown.bind(this);
+        this.handleVerticalTrackMouseDown =
+            this.handleVerticalTrackMouseDown.bind(this);
+        this.handleHorizontalThumbMouseDown =
+            this.handleHorizontalThumbMouseDown.bind(this);
+        this.handleVerticalThumbMouseDown =
+            this.handleVerticalThumbMouseDown.bind(this);
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
@@ -84,8 +80,7 @@ export default class Scrollbars extends Component {
         this.componentDidMountUniversal();
     }
 
-    componentDidMountUniversal() {
-        // eslint-disable-line react/sort-comp
+    componentDidMountUniversal() { // eslint-disable-line react/sort-comp
         const { universal } = this.props;
         if (!universal) return;
         this.setState({ didMountUniversal: true });
@@ -423,9 +418,8 @@ export default class Scrollbars extends Component {
     handleDrag(event) {
         if (this.prevPageX) {
             const { clientX } = event;
-            const {
-                left: trackLeft,
-            } = this.trackHorizontal.getBoundingClientRect();
+            const { left: trackLeft } =
+                this.trackHorizontal.getBoundingClientRect();
             const thumbWidth = this.getThumbHorizontalWidth();
             const clickPosition = thumbWidth - this.prevPageX;
             const offset = -trackLeft + clientX - clickPosition;
@@ -433,9 +427,8 @@ export default class Scrollbars extends Component {
         }
         if (this.prevPageY) {
             const { clientY } = event;
-            const {
-                top: trackTop,
-            } = this.trackVertical.getBoundingClientRect();
+            const { top: trackTop } =
+                this.trackVertical.getBoundingClientRect();
             const thumbHeight = this.getThumbVerticalHeight();
             const clickPosition = thumbHeight - this.prevPageY;
             const offset = -trackTop + clientY - clickPosition;
@@ -608,6 +601,9 @@ export default class Scrollbars extends Component {
             children,
             showOnMouseOver,
             verticalTrackStyle,
+            verticalThumbStyle,
+            horizontalTrackStyle,
+            horizontalThumbStyle,
             disableScrollbar,
             ...props
         } = this.props;
@@ -658,6 +654,7 @@ export default class Scrollbars extends Component {
 
         const trackHorizontalStyle = {
             ...trackHorizontalStyleDefault,
+            ...horizontalTrackStyle,
             ...(autoHide && trackAutoHeightStyle),
             ...((!scrollbarWidth || (universal && !didMountUniversal)) && {
                 display: "none",
@@ -665,12 +662,22 @@ export default class Scrollbars extends Component {
         };
 
         const trackVerticalStyle = {
-            ...verticalTrackStyle,
             ...trackVerticalStyleDefault,
+            ...verticalTrackStyle,
             ...(autoHide && trackAutoHeightStyle),
             ...((!scrollbarWidth || (universal && !didMountUniversal)) && {
                 display: "none",
             }),
+        };
+
+        const thumbVerticalStyle = {
+            ...thumbVerticalStyleDefault,
+            ...verticalThumbStyle,
+        };
+
+        const thumbHorizontalStyle = {
+            ...thumbHorizontalStyleDefault,
+            ...horizontalThumbStyle,
         };
 
         return createElement(
@@ -703,7 +710,7 @@ export default class Scrollbars extends Component {
                     },
                     cloneElement(
                         renderThumbHorizontal({
-                            style: thumbHorizontalStyleDefault,
+                            style: thumbHorizontalStyle,
                         }),
                         {
                             ref: (ref) => {
@@ -722,7 +729,7 @@ export default class Scrollbars extends Component {
                     },
                     cloneElement(
                         renderThumbVertical({
-                            style: thumbVerticalStyleDefault,
+                            style: thumbVerticalStyle,
                         }),
                         {
                             ref: (ref) => {
@@ -763,6 +770,9 @@ Scrollbars.propTypes = {
     showOnMouseOver: PropTypes.bool,
     disableScrollbar: PropTypes.bool,
     verticalTrackStyle: PropTypes.object,
+    verticalThumbStyle: PropTypes.object,
+    horizontalTrackStyle: PropTypes.object,
+    horizontalThumbStyle: PropTypes.object,
 };
 
 Scrollbars.defaultProps = {
